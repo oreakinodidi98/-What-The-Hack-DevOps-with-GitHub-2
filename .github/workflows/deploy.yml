@@ -1,0 +1,32 @@
+name: Azure ARM
+on: workflow_dispatch
+
+env:
+  targetEnv: wthdwgdevopsprod
+  
+jobs:
+ build-and-deploy:
+      runs-on: windows-latest
+      steps:
+              # Checkout code
+      - uses: actions/checkout@main
+      #- name: check for Azure agent
+       # run: echo az
+        # Log into Azure
+      - uses: azure/actions/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: What-The-Hack-DevOps-with-GitHub
+          template: ./ARM-Templates/container-webapp-template.json 
+          parameters: webAppName=${{env.targetEnv}}
+         # parameters: ./ARM-Templates/container-webapp-template.json webAppName=${{ targetEnv }}
+         # parameters: storageAccountType=Standard_LRS
+
+        # output containerName variable from template
+      #- run: echo ${{ steps.deploy.outputs.containerName }}
