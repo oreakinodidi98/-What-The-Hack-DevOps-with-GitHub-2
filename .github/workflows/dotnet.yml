@@ -61,8 +61,8 @@ jobs:
     - name: Deploy to dev app service container
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'wthoadevopsreg'
-        images: 'wthoadevopsreg.azurecr.io/wth/dotnetcoreapp:${{github.run_number}}'
+        app-name: 'wthoadevops-dev'
+        images: 'wthoadevops-dev.azurecr.io/wth/dotnetcoreapp:${{github.run_number}}'
  
   Deploy_to_Test: 
     runs-on: ubuntu-latest
