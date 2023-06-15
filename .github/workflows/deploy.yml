@@ -2,7 +2,7 @@ name: Azure ARM
 on: workflow_dispatch
 
 env:
-  targetEnv: wthdwgdevopsprod
+  targetEnv: wthoadevops-prod
   
 jobs:
  build-and-deploy:
@@ -13,16 +13,18 @@ jobs:
       #- name: check for Azure agent
        # run: echo az
         # Log into Azure
-      - uses: azure/actions/login@v1
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
+      #- uses: azure/actions/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.WHATTHEHACKDEVOPS_SP }}
 
         # Deploy ARM template
       - name: Run ARM deploy
         uses: azure/arm-deploy@v1
         with:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: What-The-Hack-DevOps-with-GitHub
+          resourceGroupName: what_the_hack_devops_RG
           template: ./ARM-Templates/container-webapp-template.json 
           parameters: webAppName=${{env.targetEnv}}
          # parameters: ./ARM-Templates/container-webapp-template.json webAppName=${{ targetEnv }}
