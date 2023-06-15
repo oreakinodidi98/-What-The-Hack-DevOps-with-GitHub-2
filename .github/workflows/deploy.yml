@@ -2,7 +2,7 @@ name: Azure ARM
 on: workflow_dispatch
 
 env:
-  targetEnv: wthoadevops-dev
+  targetEnv: wthoadevops-test
   
 jobs:
  build-and-deploy:
